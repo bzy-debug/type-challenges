@@ -16,4 +16,6 @@ type cases = [
 
 
 // ============= Your Code Here =============
-type AppendArgument<Fn, A> = any
+type ArgumentType<Fn extends Function> = Fn extends (...args:(infer Arg)) => unknown ? Arg : never
+type ReturnType<Fn extends Function> = Fn extends (...args: any[]) => infer Ret ? Ret : never
+type AppendArgument<Fn extends Function, A> = (...args:[...ArgumentType<Fn>, x: A]) => ReturnType<Fn>
